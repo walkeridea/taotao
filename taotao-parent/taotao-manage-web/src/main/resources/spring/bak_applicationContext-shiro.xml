@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+		<!--securityManager安全管理器-->
+		<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+			<property name="realm" ref="shiroRealm" />
+		</bean>
+		
+		<!-- 項目自定义的Realm -->
+	    <bean id="shiroRealm" class="com.taotao.manage.interceptor.shiro.ShiroRealm" />
+		
+		<!-- Shiro Filter -->
+		<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+			<property name="securityManager" ref="securityManager" />
+			<!--loginUrl验证提交地址，如果没有验证会请求此地址进行验证-->
+			<property name="loginUrl" value="/rest/page/index" />
+			<!--验证成功跳转的页面，默认跳转到上一个请求路径-->
+			<property name="successUrl" value="/rest/index" />
+			<!--通过unauthorizedUrl指定没有权限操作时跳转页面-->
+			<property name="unauthorizedUrl" value="/rest/login_toLogin" />
+			
+			<property name="filterChainDefinitions">
+				<value>
+					/rest/code.do 				= anon
+
+					<!--所有url都可以匿名访问-->
+					/static/login/** 			= anon
+					/plugins/keypad/** 			= anon
+					/static/js/myjs/** 			= authc
+					/static/js/** 				= anon
+					/uploadFiles/uploadImgs/** 	= anon
+					/app**/** 					= anon
+					/weixin/** 					= anon
+
+					<!--请求logout地址，shiro去清除session-->
+					<!--/rest/logout				= logout-->
+					/rest/login_login	 		= anon
+					/commons/**					= anon
+					/css/**						= anon
+					/js/**						= anon
+					<!--所有url都需要登录后才能访问-->
+					/**							= authc
+				</value>
+			</property>
+		</bean>
+   
+</beans>

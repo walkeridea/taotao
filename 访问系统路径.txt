@@ -1,0 +1,13 @@
+/usr/local/etc/nginx/nginx.conf
+后台系统：manage.taotao.com/rest/page/index
+
+前台系统：www.taotao.com
+
+登陆：http://sso.taotao.com/user/login.html
+
+订单系统：http://www.taotao.com/item/562379.html
+
+购物车系统：http://cart.taotao.com/cart/list.html
+
+搜索系统：http://search.taotao.com/search.html?q=tcl
+
